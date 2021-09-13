@@ -1,0 +1,25 @@
+Generic Module to get data from RDBMS database (test with DB2 on zOS, DB2 on iSeries, PostgreSQL and MS SQL)
+Uses pyodbc framework with boto3 AWS api.
+
+Main Module - rdbms2S3.py :
+rdbms2S3.py uses db2csv.py module to get rows in CSV format and s3uploader.py places the CSV file in S3 bucket
+
+db2csv.py:
+Module uses array size setup to streamline buffered rows collection to reduce DB I/O operations to minimum.
+
+s3uploader.py:
+Modules uses logic of multiple part upload technique to avoid creation of large local file.
+
+SQL can be placed in S3 bucket and as-well in local with table_name.txt format
+and configuration file can be used to do required setup.
+
+Also provided driver files in driver directories for
+- DB2 on zOS
+- DB2 on iSeries
+- postgreSQL
+- MS SQL
+
+Also included Dockerfile and Yaml files if setup need to be deployed in AWS Kub (K8s)
+
+To run the program from line command:
+python rdbms2S3.py -tn "tableName" -sd "StartDate" -ed "StartDate"

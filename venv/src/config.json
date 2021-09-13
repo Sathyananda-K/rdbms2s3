@@ -1,0 +1,14 @@
+{
+    "__comment-iseries__": "/driver/odbc_cli/clidriver/lib/libdb2o.so;SYSTEM=host name",
+    "__comment-zseries__": "/driver/odbc_cli/clidriver/lib/libdb2o.so;Hostname=host name",
+    "DRIVER": "/driver/odbc_cli/clidriver/lib/libdb2o.so;SYSTEM=host name",
+    "DATABASE": "database name",
+    "SCHEMA": "schema",
+    "PORT": "pore number",
+    "PROTOCOL": "TCPIP",
+    "UID": "user id",
+    "PWD": "password",
+    "SOURCE": "db2",
+    "s3Bucket": "bucket name"
+}
+

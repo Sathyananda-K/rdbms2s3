@@ -1,0 +1,75 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+kind: SecretProviderClass
+metadata:
+  name: aws-chicago-creds
+  namespace: chicago
+spec:
+  provider: aws
+  secretObjects:
+  - secretName: k8s-chicago-creds
+    type: Opaque
+    data:
+    - objectName: DSN_Name
+      key: DSN_Name
+    - objectName: SOURCE
+      key: SOURCE
+    - objectName: s3Bucket
+      key: s3Bucket
+  parameters:
+    objects: |
+        - objectName: "/blahblah/acc/ingestion/eksc/dl/blahblah"
+          objectType: "secretsmanager"
+          jmesPath:
+              - path: "DSN_Name"
+                objectAlias: "DSN_Name"
+              - path: "SOURCE"
+                objectAlias: "SOURCE"
+              - path: "s3Bucket"
+                objectAlias: "s3Bucket"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bucketname.deployment
+  namespace: blahblah
+  labels:
+    app: infra_blah
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: infra_blah
+  template:
+    metadata:
+      labels:
+        app: infra_blah
+    spec:
+      serviceAccountName: iamrole_blah
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - arm64
+      volumes:
+        - name: k8s-blah-creds
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "aws-chicago-creds"
+      containers:
+      - name: oedsd-dl-acc-ecr-infra-omf-dl-app-ue1
+        image: 560030824191.dkr.ecr.us-east-1.amazonaws.com/infra_blah:v2
+        envFrom:
+        - secretRef:
+            name: k8s-chicago-creds
+        command: ["/bin/sh", "-ec", "sleep 10000"]
+        volumeMounts:
+        - name: k8s-chicago-creds
+          mountPath: "/mnt/secrets-store"
+          readOnly: true

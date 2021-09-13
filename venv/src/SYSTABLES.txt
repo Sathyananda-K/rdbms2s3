@@ -1,0 +1,2 @@
+SELECT * from SYSIBM.SYSTABLES
+where createdts >= '{StartDate}' and createdts < '{EndDate}';

@@ -1,0 +1,21 @@
+cnx = pyodbc.connect(
+'Driver=/driver/odbc_cli/clidriver/lib/libdb2o.so; '
+'system=agfd.corp.fin; '
+'Port=8471; '
+'Protocol=TCPIP; '
+'Database=A01DBT1; '
+'CurrentSchema=T1; '
+'UID=XE56; '
+'PWD = data1stg;'
+)
+
+cnx = pyodbc.connect(
+'Driver=/driver/odbc_cli/clidriver/lib/libdb2o.so; '
+'system=agfd.corp.fin; '
+'Port=8471; '
+'Protocol=TCPIP; '
+'Database=A01DBT1; '
+'CurrentSchema=T1; '
+'UID=XE56; '
+'PWD = data1stg;'
+)
